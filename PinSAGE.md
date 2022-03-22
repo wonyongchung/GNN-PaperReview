@@ -94,7 +94,7 @@ PinSAGE는, 사람과 아이템의 관계가 아니라 아이템간의 관계를
 - 처음부터 어렵게 주면 학습이 잘 안되므로, 처음에는 Negative sample만 주고, epoch이 진행하면서 Hard negative를 하나씩 늘려간다.  
 - 이렇게 하면 점진적으로 positive와의 세부적 차이를 학습한다.  
   
-### 4. Case Study  
+## Case Study  
   
 <p align="center"><img src="./imgs/pinsage6.PNG"></p>  
   
