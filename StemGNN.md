@@ -64,7 +64,55 @@
   
 - 본 모델은 multiple channel로 확장될 수 있는데, j번째 channel의 output *Zj*는 다음과 같이 표현될 수 있다. 식에서 *GF*, *GF-1*, *S*는 각각 GFT, IGFT, 그리고 Spe-Seq Cell을 의미한다.  
   <p align="center"><img src="./imgs/stemgnn5.PNG"></p>  
-
+  
+- 본 모델에서는, deeper model을 구축하기 위해서 stack multiple StemGNN blocks를 residual connection으로 연결했다. 여기서는 두개의 StemGNN blocks를 이용했다.  
+  
+- 두번째 block은 first block에서 reconstructed 된 value와 ground truth value사이의 residual을 잘 예측하도록 구성된다.  
+  
+- 두 block의 output은 concat되고 GLU와 fully connected layer로 들어가서 최종 예측값을 도출한다.  
+  
+**Spe-Seq Cell**  
+- Spe-Seq Cell의 목표는, GFT를 거친 각 time series를 frequency로 분해하고 feature representation을 학습하는 것이다.  
+  
+- 네 요소로 구성된다 : **DFT, 1d conv, GLU 그리고 IDFT**가 그것이다.  
+- DFT와 IDFT는 time series data를 temporal domain과 frequency domain으로 변환시킨다. 1d conv와 GLU는 frequency domain에서 feature representation을 학습한다.  
+  
+**Spectral Graph Convolution**  
+- Spectral Graph Convolution은 3개의 step으로 구성된다.  
+  1) multivariate time series는 GFT에 의해 spectral domain으로 project된다.  
+  2) Spectral representation은 graph convolution에 의해서 filter된다.  
+  3) IGFT는 final output을 생성하기 위해 spectral representation에 적용된다.  
+  
+- GFT는 Spectral Graph Convolution의 basic operator이다.  
+- 이 과정은 basis가 normalized graph Laplacian의 eigenvector에 의해 construct된 orthonormal space에 input graph를 project한다.  
+- 자세한 과정은 Graph Convolution 과정을 참고해야한다 (Laplacian matrix, eigenvalue decomposition ...).
+  
 ## Experiments  
+### 1. Setup  
+<p align="center"><img src="./imgs/stemgnn6.PNG"></p>  
+  
+- 위의 표와 같이, 본 논문에서는 교통, 에너지 등 다양한 real world multivariate time series dataset을 사용해서 실험했다.  
+  
+- FC-LSTM, DCRNN, ST-GCN, TCN, DeepGLO 등 다양한 비교 모델들로 비교실험을 구성했다.  
+  
+### 2. Results  
+<p align="center"><img src="./imgs/stemgnn7.PNG"></p>  
+  
+- 위의 결과에서 알 수 있듯, StemGNN은 거의 대부분의 데이터셋과 평가지표에 대해서 가장 뛰어난 예측 성능을 보여주었다.  
 
+  
 ## Analysis  
+### 1. Traffic Forecasting  
+<p align="center"><img src="./imgs/stemgnn8.PNG"></p>  
+  
+- 교통 데이터셋에 대해서, 제안한 모델의 latent correlation layer에서 생성된 graph structure 가 합리적인지 확인했다.  
+  
+- 오른쪽 그림은 생성된 graph structure이다. 그림에서 볼 수 있듯이, 가까운 지역의 교통 데이터셋에 대해서는 높은 edge weight값을 보이고, 먼 지역에 대해서는 낮은 edge weight를 보인다.  
+  
+### 2. COVID-19  
+<p align="center"><img src="./imgs/stemgnn9.PNG"></p>  
+  
+- 왼쪽 그림은, COVID-19 data에 대해서 StemGNN으로 예측한 결과를, 오른쪽 그림은 latent correlation layer에서 생성된 graph structure이다.  
+  
+- 이 역시 위와 마찬가지로, 비슷한 지역의 데이터(한국-일본-중국, 영국-독일-이탈리아 등)에 대해서는 높은 edge weight값을 보이고 서로 먼 지역에 대해서는 낮은 edge weight를 보인다.  
+
