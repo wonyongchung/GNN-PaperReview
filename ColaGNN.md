@@ -21,6 +21,7 @@
 ## The Proposed Method  
   
 <p align="center"><img src="./imgs/colagnn1.PNG"></p> 
+
 ### 1. Problem Formulation  
 - X = [x1, x2, ... , xn] 으로 이루어지고 (각 x는 지역을 의미), 각 지역 데이터가 T 만큼의 input sequence가 있을 떄, horizon h를 예측하는 것이 목표이다.  
   
@@ -45,3 +46,18 @@
 - Geographical feature를 위한 geographical matrix는 연구자에 의해 미리 정해진 pre-defined graph structure다.  
   
 - Attention matrix를 생성하기 위해, 본 논문에서는 시계열 데이터를 RNN 모듈에 통과시키고 생성된 hidden state 들을 통해 attention score를 얻는다.  
+  
+- 각 element x에 대해서 RNN 을 통과 시키면 hidden state 가 다음 식에 의해서 결정된다.  
+<p align="center"><img src="./imgs/colagnn3.PNG"></p>   
+  
+- 다음으로, 논문에서 general attention coefficient a를 다음과 같이 정의했다. 이 떄 사용된 attention은 additive attention이다.  
+<p align="center"><img src="./imgs/colagnn4.PNG"></p>   
+  
+- 또한 attention score를 node마다 normalize하기 위해 아래 식을 이용했다.  
+<p align="center"><img src="./imgs/colagnn5.PNG"></p>   
+  
+- 다음 final step에서, 저자들은 두 location 사이의 공간적 거리를 포함했다.  
+  - Ag는 두 지역의 지리적 이웃을 나타낸 adjacency matrix이다.  
+  - location aware attention matrix는 Ag와 attention coefficient matrix를 combine해서 얻는다.  
+  - combination은 element wise gate M에 의해 결정된다. 이는 아래의 식과 같다.  
+<p align="center"><img src="./imgs/colagnn6.PNG"></p>   
