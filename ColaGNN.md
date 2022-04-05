@@ -99,8 +99,13 @@
 <p align="center"><img src="./imgs/colagnn12.PNG"></p>
   
 ### 2. Evaluation Metrics  
-- 평가지표는, RMSE와 PCC 두가지 였다.  
+- 평가지표는, RMSE와 PCC 두가지 였다. 
   
-### 3. Comparison Methods  
-- AR  
-- 
+## Results  
+### 1. Prediction Performance  
+- 비교모델과의 실험결과는 다음과 같다.  
+<p align="center"><img src="./imgs/colagnn13.PNG"></p>
+  
+### 3.  Interpretability  
+- 실제로 생성된 location aware attention matrix를 보면, 비슷한 지역끼리는 높은 attention score를, 먼 지역끼리는 낮은 attention score를 갖는다는 것을 확인할 수 있다.  
+<p align="center"><img src="./imgs/colagnn14.PNG"></p>
