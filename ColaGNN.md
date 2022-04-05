@@ -61,3 +61,46 @@
   - location aware attention matrix는 Ag와 attention coefficient matrix를 combine해서 얻는다.  
   - combination은 element wise gate M에 의해 결정된다. 이는 아래의 식과 같다.  
 <p align="center"><img src="./imgs/colagnn6.PNG"></p>   
+  
+### 3. Multi-Scale Dilated Convolution  
+- Time series의 temporal feature를 추출하기 위해 1d dilated convolution을 사용한다.  
+  
+- k dilation rate를 통해서 time series data feature를 추출한다.  
+  
+- 이렇게 추출된 feature는 graph에서 각 노드의 feature가 된다.  
+  
+- dilated convolution output feature vector는 다음 식과 같이 정의 된다.  
+<p align="center"><img src="./imgs/colagnn7.PNG"></p>   
+  
+### 4. Graph Message Passing - Propagation  
+- 위의 과정을 통해 cross-location attention과 local temporal feature를 추출한 후, GNN을 통해 예측하고자 한다.  
+  - Graph Message Passing을 통해 이웃 노드의 정보를 가져온다.  
+  - 각 노드의 정보가 h 로 표현될때, h는 다음과 같이 계산된다.  
+<p align="center"><img src="./imgs/colagnn8.PNG"></p>   
+  
+### 5. Output Layer - Prediction  
+- 각 지역에 대해서, 논문에서는 각 노드의 feature와 graph structure를 결합하여 output layer를 거쳐서 아래의 식과 같이 예측을 진행한다.  
+<p align="center"><img src="./imgs/colagnn9.PNG"></p>  
+  
+### 6. Optimization  
+- loss function은 다음과 같다.  
+<p align="center"><img src="./imgs/colagnn10.PNG"></p>  
+  
+- 전체 알고리즘은 다음과 같다.  
+<p align="center"><img src="./imgs/colagnn11.PNG"></p>  
+  
+  
+## Experimental setup  
+### 1. Datasets  
+- 논문에서는 3가지 감염병 데이터셋으로 실험을 진행했다.  
+  - Japan-Prefectures : 일본 현 단위의 감염병 데이터셋이다.  
+  - US-States : 미국 주 단위의 감염병 데이터셋이다.  
+  - US-Regions : 미국의 주를 지역별로 군집화하여 정리한 감염병 데이터셋이다.  
+<p align="center"><img src="./imgs/colagnn12.PNG"></p>
+  
+### 2. Evaluation Metrics  
+- 평가지표는, RMSE와 PCC 두가지 였다.  
+  
+### 3. Comparison Methods  
+- AR  
+- 
