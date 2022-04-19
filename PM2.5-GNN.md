@@ -49,6 +49,7 @@
 - 각 P와 Q는 다음과 같이 이루어져 있다.  
 <p align="center"><img src="./imgs/pm2.5gnn5.PNG"></p>  
 <p align="center"><img src="./imgs/pm2.5gnn6.PNG"></p>  
+  
 **Node Attribute**  
 - Planetary Boundary Layer (PBL) height : 대기경계층으로, PM 2.5 농도는 PBL height와 반비례하는 경향을 보인다.  
 - K index : 습한 공기의 불안정성이다. K index가 높으면 대류권 성층화가 더 불안정하다.  
@@ -57,6 +58,7 @@
 - Relative humidity : 상대습도이다.  
 - Precipitation : 강수량으로, PM 2.5 농도와 반비례하는 경향을 보인다.  
 - Surface pressure : 기압으로, PM 2.5 농도와 비례하는 경향을 보인다.  
+  
   
 **Edge Attribute**  
 <p align="center"><img src="./imgs/pm2.5gnn7.PNG"></p>  
@@ -73,10 +75,29 @@
 - 두 지점 사이의 거리가 300km 미만이고, 두 지점 사이에 있는 산이 1200m 보다 낮으면 두 지점 사이에 PM 2.5 가 이동할 수 있다고 설정한다.  
   
 ### 4. PM 2.5-GNN Model  
-<p align="center"><img src="./imgs/pm2.5gnn9.PNG"></p>  
+<p align="center"><img src="./imgs/pm2.5gnn10.PNG"></p>  
 - 위의 그림은 제안하는 PM 2.5-GNN 모델이다.  
   
 - 예측을 진행하기 위해, spatio-temporal GRU가 사용되었다.  
-- 
-
-
+- 아래 식에서 Psi와 Xi는 differentiable function을 의미한다.  
+<p align="center"><img src="./imgs/pm2.5gnn11.PNG"></p>  
+  
+## Experiments  
+### 1. Datasets  
+- KnowAir라는 184개 도시의 미세먼지 데이터를 이용했다.  
+- 데이터는 아래 표와 같이 3 sub-datasets로 나뉘었다.  
+<p align="center"><img src="./imgs/pm2.5gnn12.PNG"></p>
+  
+### 2. Compared Models  
+- MLP, LSTM, GRU, GC-LSTM, nodesFC-GRU를 비교 모델로 사용했다.  
+  
+### 4. Experimental Results  
+- 전체 모델의 성능은 아래의 표와 같다.  
+<p align="center"><img src="./imgs/pm2.5gnn13.PNG"></p>  
+  
+**Importance of Domain Knowledge**  
+- 연구자들은, PBL height와 transport direction information을 활용했다.  
+- 이 두 정보는, PM 2.5 예측에 매우 중요하지만, 아직 제대로 적용된 적이 없었다.  
+- 이 두 정보를 제거한 상태로 ablation study를 진행했고, 매우 downgrade된 성능을 확인할 수 있다.  
+<p align="center"><img src="./imgs/pm2.5gnn14.PNG"></p>  
+- domain knowledge가 중요하다는 것을 알 수 있다.
