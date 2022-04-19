@@ -101,5 +101,6 @@
 - 연구자들은, PBL height와 transport direction information을 활용했다.  
 - 이 두 정보는, PM 2.5 예측에 매우 중요하지만, 아직 제대로 적용된 적이 없었다.  
 - 이 두 정보를 제거한 상태로 ablation study를 진행했고, 매우 downgrade된 성능을 확인할 수 있다.  
-<p align="center"><img src="./imgs/pm2.5gnn14.PNG"></p>  
+<p align="center"><img src="./imgs/pm2.5gnn14.PNG"></p> 
+  
 - domain knowledge가 중요하다는 것을 알 수 있다.
