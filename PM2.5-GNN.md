@@ -76,6 +76,7 @@
   
 ### 4. PM 2.5-GNN Model  
 <p align="center"><img src="./imgs/pm2.5gnn10.PNG"></p>  
+  
 - 위의 그림은 제안하는 PM 2.5-GNN 모델이다.  
   
 - 예측을 진행하기 위해, spatio-temporal GRU가 사용되었다.  
